@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>All Games</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="scripts/search.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    nav a {
+      color: #eee;
+      margin: 0 10px;
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    nav a:hover {
+      color: #f39c12;
+      background-color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .controls-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .search-container {
+      flex-grow: 1;
+      min-width: 300px;
+    }
+
+    #searchBox {
+      padding: 10px 15px;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 6px;
+      border: none;
+      background-color: #222;
+      color: #eee;
+    }
+
+    .filter-container {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 15px;
+      background-color: #222;
+      color: #eee;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background-color: #f39c12;
+      color: #121212;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 25px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .game-card {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 15px;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
+
+    .game-card img {
+      width: 100%;
+      border-radius: 6px;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .game-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .game-card h3 {
+      margin: 10px 0 5px;
+    }
+
+    .game-card .genre {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 5px;
+    }
+
+    .game-card .rating {
+      color: #f39c12;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1e1e1e;
+      margin-top: 50px;
+    }
+
+    .no-results {
+      text-align: center;
+      grid-column: 1 / -1;
+      padding: 50px;
+      color: #777;
+    }
+
+    @media (max-width: 768px) {
+      .controls-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .game-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/game website logo.png" alt="Logo" class="logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games2.html">Browse</a>
+      <a href="shop.html">Shop</a>
+      <a href="Forums.html">Forums</a>
+	  <a href="contact us.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>All Games</h1>
+
+    <div class="controls-container">
+      <div class="search-container">
+        <input type="text" id="searchBox" placeholder="Search games...">
+      </div>
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="action">Action</button>
+        <button class="filter-btn" data-filter="adventure">Adventure</button>
+        <button class="filter-btn" data-filter="puzzle">Puzzle</button>
+        <button class="filter-btn" data-filter="racing">Racing</button>
+      </div>
+    </div>
+
+    <section class="game-grid" id="gameGrid">
+      <a href="game1.html" class="game-card" data-title="Space Blaster" data-genre="action" data-rating="4.5">
+        <img src="images/space blaster.png" alt="Space Blaster">
+        <h3>Space Blaster</h3>
+        <div class="genre">Action • Shooter</div>
+        <div class="rating">★★★★☆ (4.5)</div>
+      </a>
+      <a href="game2.html" class="game-card" data-title="Pixel Ninja" data-genre="action" data-rating="4.2">
+        <img src="images/pixel ninja.png" alt="Pixel Ninja">
+        <h3>Pixel Ninja</h3>
+        <div class="genre">Action • Platformer</div>
+        <div class="rating">★★★★☆ (4.2)</div>
+      </a>
+      <a href="game3.html" class="game-card" data-title="Zombie Rush" data-genre="action" data-rating="4.0">
+          <img src="images/zombie rush.png" alt="Zombie Rush">
+        <h3>Zombie Rush</h3>
+        <div class="genre">Action • Survival</div>
+        <div class="rating">★★★★☆ (4.0)</div>
+      </a>
+      <a href="game4.html" class="game-card" data-title="Dungeon Crawl" data-genre="adventure" data-rating="4.7">
+        <img src="images/dungeon crawl.png" alt="Dungeon Crawl">
+        <h3>Dungeon Crawler</h3>
+        <div class="genre">Adventure • RPG</div>
+        <div class="rating">★★★★★ (4.7)</div>
+      </a>
+      <a href="game5.html" class="game-card" data-title="Alien Invasion" data-genre="action" data-rating="4.3">
+        <img src="images/alien invasion.png" alt="Alien Invasion">
+        <h3>Alien Invasion</h3>
+        <div class="genre">Action • Shooter</div>
+        <div class="rating">★★★★☆ (4.3)</div>
+      </a>
+      <a href="game6.html" class="game-card" data-title="Puzzle Pack" data-genre="puzzle" data-rating="4.8">
+        <img src="images/puzzle pack.jpg" alt="Puzzle Pack">
+        <h3>Puzzle Quest</h3>
+        <div class="genre">Puzzle • Strategy</div>
+        <div class="rating">★★★★★ (4.8)</div>
+      </a>
+      <a href="game7.html" class="game-card" data-title="Racing Extreme" data-genre="racing" data-rating="4.1">
+        <img src="images/Racing.jpg" alt="Racing Extreme">
+        <h3>Racing Extreme</h3>
+        <div class="genre">Racing • Sports</div>
+        <div class="rating">★★★★☆ (4.1)</div>
+      </a>
+      <a href="game8.html" class="game-card" data-title="Platform Adventure" data-genre="adventure" data-rating="4.6">
+        <img src="images/platform adventure.png" alt="Platform Adventure">
+        <h3>Platform Adventure</h3>
+        <div class="genre">Adventure • Platformer</div>
+        <div class="rating">★★★★★ (4.6)</div>
+      </a>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; Done by Deshaun Mallan Wignarajah</p>
+  </footer>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchBox = document.getElementById('searchBox');
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const gameCards = document.querySelectorAll('.game-card');
+      
+      
+      searchBox.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        filterGames();
+      });
+      
+      
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          filterGames();
+        });
+      });
+      
+      function filterGames() {
+        const searchTerm = searchBox.value.toLowerCase();
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        let hasResults = false;
+        
+        gameCards.forEach(card => {
+          const title = card.dataset.title.toLowerCase();
+          const genre = card.dataset.genre;
+          const matchesSearch = title.includes(searchTerm);
+          const matchesFilter = activeFilter === 'all' || genre === activeFilter;
+          
+          if (matchesSearch && matchesFilter) {
+            card.style.display = 'block';
+            hasResults = true;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+        
+        
+        const noResults = document.getElementById('noResults');
+        if (!hasResults) {
+          if (!noResults) {
+            const noResultsDiv = document.createElement('div');
+            noResultsDiv.id = 'noResults';
+            noResultsDiv.className = 'no-results';
+            noResultsDiv.textContent = 'No games found matching your criteria.';
+            document.getElementById('gameGrid').appendChild(noResultsDiv);
+          }
+        } else if (noResults) {
+          noResults.remove();
+        }
+      }
+    });
+	  document.addEventListener('DOMContentLoaded', function() {
+  const gameCards = document.querySelectorAll('.game-card');
+
+  gameCards.forEach(card => {
+    card.addEventListener('click', function(event) {
+      event.preventDefault(); 
+
+      
+      const title = this.dataset.title;
+      const genre = this.dataset.genre;
+      const rating = this.dataset.rating;
+      const imageSrc = this.querySelector('img').src;
+      const description = getGameDescription(title); 
+
+      
+      let overlay = document.getElementById('gameInfoOverlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'gameInfoOverlay';
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100vw';
+        overlay.style.height = '100vh';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+        overlay.style.display = 'flex';
+        overlay.style.alignItems = 'center';
+        overlay.style.justifyContent = 'center';
+        overlay.style.color = '#fff';
+        overlay.style.fontSize = '18px';
+        overlay.style.flexDirection = 'column';
+        overlay.style.padding = '20px';
+        overlay.style.textAlign = 'center';
+        overlay.style.zIndex = '200';
+
+        document.body.appendChild(overlay);
+      }
+
+      overlay.innerHTML = `
+        <img src="${imageSrc}" alt="${title}" style="max-width: 300px; border-radius: 10px; margin-bottom: 15px;">
+        <h2>${title}</h2>
+        <p><strong>Genre:</strong> ${genre}</p>
+        <p><strong>Rating:</strong> ${rating} ★</p>
+        <p style="max-width: 600px;">${description}</p>
+        <button id="closeOverlay" style="margin-top: 15px; padding: 10px; font-size: 16px; border: none; background-color: #f39c12; color: #121212; border-radius: 6px; cursor: pointer;">Close</button>
+      `;
+
+          
+      document.getElementById('closeOverlay').addEventListener('click', function() {
+        overlay.remove();
+      });
+    });
+  });
+
+ 
+  function getGameDescription(title) {
+    const descriptions = {
+      "Space Blaster": "An intense space shooter where you battle enemy fleets and upgrade your spaceship.",
+      "Pixel Ninja": "A fast-paced platformer where a pixelated ninja must fight enemies and uncover secrets.",
+      "Zombie Rush": "Survive waves of zombies in this thrilling action-survival game.",
+      "Dungeon Crawl": "Explore dark dungeons, battle mythical creatures, and collect epic loot in this RPG adventure.",
+      "Alien Invasion": "Defend Earth against alien forces using powerful weapons and strategy.",
+      "Puzzle Quest": "Solve challenging puzzles and complete quests in this engaging puzzle game.",
+      "Racing Extreme": "Experience high-speed racing with intense competition and adrenaline-pumping tracks.",
+      "Platform Adventure": "Jump, climb, and explore vast worlds in this exciting adventure platformer."
+    };
+    return descriptions[title] || "No description available.";
+  }
+});
+
+  </script>
+</body>
+</html>
+

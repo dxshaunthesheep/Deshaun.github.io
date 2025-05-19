@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Indie Arcade</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    nav a {
+      color: #eee;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #f39c12;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .game-card {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .game-card:hover {
+      transform: scale(1.05);
+      background-color: #333;
+    }
+
+    .game-card img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1e1e1e;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/game website logo.png" alt="Logo" class="logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games2.html">Browse</a>
+      <a href="shop.html">Shop</a>
+      <a href="Forums.html">Forums</a>
+	  <a href="contact us.html">Contact Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Featured Games</h1>
+    <section class="game-grid">
+      <a href="game1.html" class="game-card">
+        <img src="images/space blaster.png" alt="Space Blaster">
+        <h3>Space Blaster</h3>
+      </a>
+      <a href="game2.html" class="game-card">
+        <img src="images/alien invasion.png" alt="Pixel Ninja">
+        <h3>Pixel Ninja</h3>
+      </a>
+      <a href="game3.html" class="game-card">
+        <img src="images/zombie rush.png" alt="Zombie Rush">
+        <h3>Zombie Rush</h3>
+      </a>
+		<a href="game4.html" class="game-card">
+    <img src="images/dungeon crawl.png" alt="Dungeon Crawl">
+    <h3>Dungeon Crawler</h3>
+  </a>
+  <a href="game5.html" class="game-card">
+    <img src="images/alien invasion.png" alt="Alien Invasion">
+    <h3>Alien Invasion</h3>
+  </a>
+    </section>
+  </main>
+
+  <footer>
+	  <p> Done by Deshaun Mallan Wignarajah</p>
+  </footer>
+</body>
+</html>
+

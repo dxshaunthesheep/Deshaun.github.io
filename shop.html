@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Indie Arcade</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #121212;
+      color: #eee;
+    }
+
+    header {
+      background-color: #1e1e1e;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      height: 40px;
+    }
+
+    nav a {
+      color: #eee;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      color: #f39c12;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 40px 0 20px;
+      color: #f39c12;
+    }
+
+    .game-grid, .merch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .game-card, .merch-item {
+      background-color: #222;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      color: #fff;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .game-card:hover, .merch-item:hover {
+      transform: scale(1.05);
+      background-color: #333;
+    }
+
+    .game-card img, .merch-item img {
+      width: 100%;
+      border-radius: 6px;
+    }
+
+    .price {
+      color: #f39c12;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .add-to-cart {
+      background-color: #f39c12;
+      color: #121212;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .add-to-cart:hover {
+      background-color: #e67e22;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #1e1e1e;
+      margin-top: 50px;
+    }
+
+    /* Cart Styles */
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+    }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #f39c12;
+      color: #121212;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .cart-dropdown {
+      position: absolute;
+      right: 20px;
+      top: 60px;
+      background-color: #1e1e1e;
+      border: 1px solid #333;
+      border-radius: 5px;
+      width: 300px;
+      padding: 15px;
+      z-index: 100;
+      display: none;
+    }
+
+    .cart-dropdown.show {
+      display: block;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-title {
+      font-weight: bold;
+    }
+
+    .cart-item-price {
+      color: #f39c12;
+      font-size: 0.9em;
+    }
+
+    .cart-item-remove {
+      color: #ff6b6b;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .cart-total {
+      font-weight: bold;
+      margin-top: 15px;
+      text-align: right;
+    }
+
+    .checkout-btn {
+      background-color: #f39c12;
+      color: #121212;
+      border: none;
+      padding: 10px;
+      width: 100%;
+      border-radius: 5px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .checkout-btn:hover {
+      background-color: #e67e22;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 20px;
+      color: #aaa;
+    }
+
+    /* Notification */
+    .notification {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #2ecc71;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      display: none;
+      z-index: 1000;
+    }
+
+    .notification.show {
+      display: block;
+      animation: fadeInOut 3s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      10% { opacity: 1; transform: translateY(0); }
+      90% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="images/game website logo.png" alt="Logo" class="logo">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="games2.html">Browse</a>
+      <a href="shop.html">Shop</a>
+      <a href="Forums.html">Forums</a>
+      <a href="contact us.html">Contact Us</a>
+    </nav>
+    <div class="cart-icon" id="cartIcon">
+      <i class="fas fa-shopping-cart"></i>
+      <span class="cart-count" id="cartCount">0</span>
+      <div class="cart-dropdown" id="cartDropdown">
+        <div id="cartItems"></div>
+        <div class="empty-cart" id="emptyCart">Your cart is empty</div>
+        <div class="cart-total">Total: <span id="cartTotal">$0.00</span></div>
+        <button class="checkout-btn" id="checkoutBtn">Checkout</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <h1>Featured Games</h1>
+    <section class="game-grid">
+      <a href="game1.html" class="game-card">
+        <img src="images/space blaster.png" alt="Space Blaster">
+        <h3>Space Blaster</h3>
+      </a>
+      <a href="game2.html" class="game-card">
+        <img src="images/pixel ninja.png" alt="Pixel Ninja">
+        <h3>Pixel Ninja</h3>
+      </a>
+      <a href="game3.html" class="game-card">
+        <img src="images/zombie rush.png" alt="Zombie Rush">
+        <h3>Zombie Rush</h3>
+      </a>
+      <a href="game4.html" class="game-card">
+        <img src="images/dungeon crawl.png" alt="Dungeon Crawl">
+        <h3>Dungeon Crawler</h3>
+      </a>
+      <a href="game5.html" class="game-card">
+        <img src="images/alien invasion.png" alt="Alien Invasion">
+        <h3>Alien Invasion</h3>
+      </a>
+    </section>
+
+    <section id="shop">
+      <h2>Merch Shop</h2>
+      <div class="merch-grid">
+        <div class="merch-item">
+          <img src="images/space blaster tee.png" alt="Space Blaster T-Shirt">
+          <h3>Space Blaster Tee</h3>
+          <p class="price">$24.99</p>
+          <button class="add-to-cart" data-id="1" data-name="Space Blaster Tee" data-price="24.99">Add to Cart</button>
+        </div>
+        <div class="merch-item">
+          <img src="images/pixel ninja hoodie.png" alt="Pixel Ninja Hoodie">
+          <h3>Pixel Ninja Hoodie</h3>
+          <p class="price">$49.99</p>
+          <button class="add-to-cart" data-id="2" data-name="Pixel Ninja Hoodie" data-price="49.99">Add to Cart</button>
+        </div>
+        <div class="merch-item">
+          <img src="images/zombie rush poster.png" alt="Zombie Rush Poster">
+          <h3>Zombie Rush Poster</h3>
+          <p class="price">$14.99</p>
+          <button class="add-to-cart" data-id="3" data-name="Zombie Rush Poster" data-price="14.99">Add to Cart</button>
+        </div>
+        <div class="merch-item">
+          <img src="images/mug.png" alt="Indie Arcade Mug">
+          <h3>Indie Arcade Mug</h3>
+          <p class="price">$12.99</p>
+          <button class="add-to-cart" data-id="4" data-name="Indie Arcade Mug" data-price="12.99">Add to Cart</button>
+        </div>
+        <div class="merch-item">
+          <img src="images/sticker pack.png" alt="Sticker Pack">
+          <h3>Sticker Pack</h3>
+          <p class="price">$8.99</p>
+          <button class="add-to-cart" data-id="5" data-name="Sticker Pack" data-price="8.99">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="notification" id="notification">
+    Item added to cart!
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Indie Arcade</p>
+  </footer>
+
+ 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let cart = [];
+      const cartIcon = document.getElementById('cartIcon');
+      const cartDropdown = document.getElementById('cartDropdown');
+      const cartCount = document.getElementById('cartCount');
+      const cartItems = document.getElementById('cartItems');
+      const emptyCart = document.getElementById('emptyCart');
+      const cartTotal = document.getElementById('cartTotal');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+      const notification = document.getElementById('notification');
+      const addToCartButtons = document.querySelectorAll('.add-to-cart');
+      
+     
+      cartIcon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        cartDropdown.classList.toggle('show');
+      });
+      
+      
+      document.addEventListener('click', function() {
+        cartDropdown.classList.remove('show');
+      });
+      
+      
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          const name = this.getAttribute('data-name');
+          const price = parseFloat(this.getAttribute('data-price'));
+          
+         
+          const existingItem = cart.find(item => item.id === id);
+          
+          if (existingItem) {
+            existingItem.quantity += 1;
+          } else {
+            cart.push({
+              id,
+              name,
+              price,
+              quantity: 1
+            });
+          }
+          
+          updateCart();
+          showNotification();
+        });
+      });
+      
+      
+      function updateCart() {
+        
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.textContent = totalItems;
+        
+        
+        if (cart.length === 0) {
+          emptyCart.style.display = 'block';
+          cartItems.style.display = 'none';
+        } else {
+          emptyCart.style.display = 'none';
+          cartItems.style.display = 'block';
+          
+         
+          cartItems.innerHTML = '';
+          
+          
+          cart.forEach(item => {
+            const cartItemElement = document.createElement('div');
+            cartItemElement.className = 'cart-item';
+            
+            cartItemElement.innerHTML = `
+              <div class="cart-item-info">
+                <div class="cart-item-title">${item.name}</div>
+                <div class="cart-item-price">$${item.price.toFixed(2)} × ${item.quantity}</div>
+              </div>
+              <div>
+                $${(item.price * item.quantity).toFixed(2)}
+                <span class="cart-item-remove" data-id="${item.id}">×</span>
+              </div>
+            `;
+            
+            cartItems.appendChild(cartItemElement);
+          });
+          
+         
+          document.querySelectorAll('.cart-item-remove').forEach(button => {
+            button.addEventListener('click', function() {
+              const id = this.getAttribute('data-id');
+              removeFromCart(id);
+            });
+          });
+        }
+        
+     
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        cartTotal.textContent = `$${total.toFixed(2)}`;
+        
+        
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+      
+      
+      function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        updateCart();
+      }
+      
+     
+      function showNotification() {
+        notification.classList.add('show');
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      }
+      
+      
+      checkoutBtn.addEventListener('click', function() {
+        if (cart.length === 0) {
+          alert('Your cart is empty!');
+          return;
+        }
+        
+        
+        alert(`Checkout complete! Total: $${cartTotal.textContent.substring(1)}`);
+        cart = [];
+        updateCart();
+        cartDropdown.classList.remove('show');
+      });
+      
+     
+      const savedCart = localStorage.getItem('cart');
+      if (savedCart) {
+        cart = JSON.parse(savedCart);
+        updateCart();
+      }
+    });
+  </script>
+</body>
+</html>
